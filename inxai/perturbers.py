@@ -58,12 +58,17 @@ class CategoricalNoisePerturber(TransformerMixin, BaseEstimator):
     def __init__(self, probability_multiplier=1, importances = None):
         self.probability_multiplier = probability_multiplier
         self.importances = importances
+        self.colnames = None
 
     def set_importances(self, importances):
         self.importances = importances
 
     def fit(self, X):
+        self.colnames = X.columns
         return self
+    
+    def get_feature_names(self):
+        return self.colnames
 
     def transform(self, X):
         for col_idx, column in enumerate(X):
